@@ -1,5 +1,6 @@
 Star[] star;
 SpaceShip bob = new SpaceShip();
+Asteroids[] chad;
 boolean leftIsPressed = false;
 boolean rightIsPressed = false;
 boolean upIsPressed = false;
@@ -11,7 +12,12 @@ public void setup()
   for(int i = 0;i<star.length;i++)
   {
   star[i] = new Star();  
-  } 
+  }
+  chad = new Asteroids[7];
+  for(int i = 0;i<chad.length;i++)
+  {
+  chad[i] = new Asteroids();  
+  }
 
   
 }
@@ -40,6 +46,13 @@ public void draw()
   {
   star[i].show();  
   }
+  for(int i = 0;i<chad.length;i++)
+  {
+  chad[i].show();  
+  chad[i].move();
+  }
+  
+  
 }
 class SpaceShip extends Floater  
 {
@@ -48,14 +61,14 @@ class SpaceShip extends Floater
     corners=4;
     xCorners = new int [corners];   
     yCorners = new int [corners];   
-    xCorners[0] = -8;
-    yCorners[0] = -8;
-    xCorners[1] = 16;
-    yCorners[1] = 0;
-    xCorners[2] = -8;
-    yCorners[2] = 8;
-    xCorners[3] = -2;
-    yCorners[3] = 0;
+    xCorners[0] = -8-1;
+    yCorners[0] = -8-1;
+    xCorners[1] = 16-1;
+    yCorners[1] = 0-1;
+    xCorners[2] = -8-1;
+    yCorners[2] = 8-1;
+    xCorners[3] = -2-1;
+    yCorners[3] = 0-1;
     myColor=color(250,0,0);
     myCenterX = 250; 
     myCenterY = 250;   
@@ -198,22 +211,6 @@ public void keyReleased()
   }  
    
 } 
-// public void starCreate()
-// {
-// for(i=0;i>starFieldx.length;i++)
-//   {
-//    starFieldx[i]=int(Math.random()*500)+1
-//    starFieldy[i]=int(Math.random()*500)+1 
-//   }
-// }
-// public void starField()
-// {
-// for(i=0;i>starFieldx.length;i++)
-//   {
-//   ellipse(starFieldx[i], starFieldy[i], 5, 5);
-//   }
-// }
-
 class Star 
  {
   int x; 
@@ -226,6 +223,46 @@ class Star
   void show()
   {
   fill(250,0,0);
-  ellipse(x,y,5,5);  
+  ellipse(x,y,2,2);  
+  }
+}
+
+class Asteroids extends Floater
+{
+private int rotspeed;
+  public Asteroids()
+  {
+  corners = 4;
+  xCorners = new int [corners];
+  yCorners = new int [corners]; 
+  xCorners[0]=-5;
+  yCorners[0]=-6;
+  xCorners[1]=3;
+  yCorners[1]=-6;
+  xCorners[2]=6;
+  yCorners[2]=5;
+  xCorners[3]=-11;
+  yCorners[3]=5;
+  myColor=color(250,0,0);
+  myCenterX = (int)(Math.random()*500)+1; 
+  myCenterY = (int)(Math.random()*500)+1;   
+  myDirectionX=(int)(Math.random()*10)-5;
+  myDirectionY=(int)(Math.random()*10)-5;  
+  rotspeed=(int)(Math.random()*10)+1;
+  }
+  public void setX(int x){myCenterX=x;}
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY=y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX=x;}    public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY=y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection=degrees;}
+  public double getPointDirection(){return myPointDirection;} 
+  
+  public void move()
+  {
+    super.move();
+    myPointDirection+=rotspeed;
   }
 }
