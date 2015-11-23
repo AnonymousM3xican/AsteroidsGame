@@ -1,6 +1,6 @@
 Star[] star;
 SpaceShip bob = new SpaceShip();
-Asteroids[] chad;
+ArrayList <Asteroids> theList;
 boolean leftIsPressed = false;
 boolean rightIsPressed = false;
 boolean upIsPressed = false;
@@ -13,10 +13,10 @@ public void setup()
   {
   star[i] = new Star();  
   }
-  chad = new Asteroids[7];
-  for(int i = 0;i<chad.length;i++)
+  theList = new ArrayList <Asteroids> ();
+  for(int i = 0;i<7;i++)
   {
-  chad[i] = new Asteroids();  
+  theList.add(new Asteroids());  
   }
 
   
@@ -46,10 +46,10 @@ public void draw()
   {
   star[i].show();  
   }
-  for(int i = 0;i<chad.length;i++)
+  for(int i = 0;i<7;i++)
   {
-  chad[i].show();  
-  chad[i].move();
+  theList.get(i).show();  
+  theList.get(i).move();
   }
   
   
