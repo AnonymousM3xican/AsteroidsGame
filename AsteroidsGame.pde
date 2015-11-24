@@ -46,10 +46,12 @@ public void draw()
   {
   star[i].show();  
   }
-  for(int i = 0;i<7;i++)
+  for(int i = 0;i<theList.size();i++)
   {
   theList.get(i).show();  
   theList.get(i).move();
+  if (dist(theList.get(i).getX(),theList.get(i).getY(),bob.getX(),bob.getY())<20)
+    theList.remove(i);
   }
   
   
@@ -266,3 +268,4 @@ private int rotspeed;
     myPointDirection+=rotspeed;
   }
 }
+
