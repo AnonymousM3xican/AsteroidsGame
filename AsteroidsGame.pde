@@ -1,13 +1,18 @@
 Star[] star;
+
 SpaceShip bob = new SpaceShip();
+Bullet bobby = new Bullet(bob);
 ArrayList <Asteroids> theList;
+ArrayList <Bullet> bulletList;
 boolean leftIsPressed = false;
 boolean rightIsPressed = false;
 boolean upIsPressed = false;
 boolean spaceIsPressed = false;
+boolean rIsPressed = false;
+boolean gameOver = false;
 public void setup() 
 {
-  size(500,500);
+  size(500,500,P2D);
   star = new Star[75];
   for(int i = 0;i<star.length;i++)
   {
@@ -18,11 +23,13 @@ public void setup()
   {
   theList.add(new Asteroids());  
   }
-
+  bulletList = new ArrayList <Bullet> ();
   
 }
 public void draw() 
 {
+  if (gameOver == false)
+  {
   background(0);
   bob.show();
   bob.move();
@@ -36,12 +43,17 @@ public void draw()
   bob.accelerate(.05);
   }
   if(spaceIsPressed==true){
-  bob.myCenterX = (int)(Math.random()*500)+1;
-  bob.myCenterY = (int)(Math.random()*500)+1;
-  bob.myDirectionX=0;
-  bob.myDirectionY=0;
+  bob.setX((int)(Math.random()*500)+1);
+  bob.getX();
+  bob.setY((int)(Math.random()*500)+1);
+  bob.getY();
+  bob.getDirectionX();
+  bob.getDirectionY();
+  bob.setPointDirection((int)(Math.random()*360)+1);
+  bob.getPointDirection();
   }
 
+  
   for(int i = 0;i<star.length;i++)
   {
   star[i].show();  
@@ -50,12 +62,105 @@ public void draw()
   {
   theList.get(i).show();  
   theList.get(i).move();
-  if (dist(theList.get(i).getX(),theList.get(i).getY(),bob.getX(),bob.getY())<20)
-    theList.remove(i);
   }
+  for(int o = 0;o<bulletList.size();o++)
+  {
+  bulletList.get(o).show();  
+  bulletList.get(o).move();
+  if (bulletList.get(o).getAge()>60)
+  bulletList.remove(o);
+  }
+  if (theList.size()==3){
+    for(int i = 0;i<7;i++)
+    {
+      theList.add(new Asteroids());  
+    }
+  }
+  for(int i = 0;i<theList.size();i++)
+    for(int o = 0;o<bulletList.size();o++)
+  if (dist(theList.get(i).getX(),theList.get(i).getY(),bulletList.get(o).getX(),bulletList.get(o).getY())<20){
+    theList.remove(i);
+    bulletList.remove(o);
+    break;
+  }
+  for(int i = 0;i<theList.size();i++)
+    if (dist(theList.get(i).getX(),theList.get(i).getY(),bob.getX(),bob.getY())<20){
+    theList.remove(i);
+    gameOver = true;
+    }
+  }
+  else
+  {
+  background(0);
+  fill(250,0,0);
+  text("GAMEOVER",225,250);
+  text("Press R to Restart",210,270);
+  bob.setX(250); 
+  bob.getX();
+  bob.setY(250);
+  bob.getY();
+  bob.getDirectionX();
+  bob.getDirectionY(); 
+  bob.setPointDirection(50);
+  bob.getPointDirection();
+  }
+  if(rIsPressed==true){
+  background(0);
   
   
+  
+  if(leftIsPressed==true){
+  bob.rotate(-2);
+  }
+  if(rightIsPressed==true){
+  bob.rotate(2);
+  }
+  if(upIsPressed==true){
+  bob.accelerate(.05);
+  }
+  if(spaceIsPressed==true){
+  bob.setX((int)(Math.random()*500)+1);
+  bob.getX();
+  bob.setY((int)(Math.random()*500)+1);
+  bob.getY();
+  bob.getDirectionX();
+  bob.getDirectionY();
+  bob.setPointDirection((int)(Math.random()*360)+1);
+  bob.getPointDirection();
+  }
+  for(int i = 0;i<star.length;i++)
+  {
+  star[i].show();  
+  }
+  for(int i = 0;i<theList.size();i++)
+  {
+  theList.get(i).show();  
+  theList.get(i).move();
+  }
+  for(int o = 0;o<bulletList.size();o++)
+  {
+  bulletList.get(o).show();  
+  bulletList.get(o).move();
+  if (bulletList.get(o).getAge()>60)
+  bulletList.remove(o);
+  }
+
+  for(int i = 0;i<theList.size();i++)
+    for(int o = 0;o<bulletList.size();o++)
+  if (dist(theList.get(i).getX(),theList.get(i).getY(),bulletList.get(o).getX(),bulletList.get(o).getY())<20){
+    theList.remove(i);
+    bulletList.remove(o);
+  }
+  for(int i = 0;i<theList.size();i++)
+    if (dist(theList.get(i).getX(),theList.get(i).getY(),bob.getX(),bob.getY())<20){
+    theList.remove(i);
+    gameOver = true;
+    }
+  }
 }
+
+    
+
 class SpaceShip extends Floater  
 {
   public SpaceShip()
@@ -76,7 +181,7 @@ class SpaceShip extends Floater
     myCenterY = 250;   
     myDirectionX=0;
     myDirectionY=0; 
-    myPointDirection=-50; 
+    myPointDirection=50; 
 
   }
 
@@ -190,8 +295,15 @@ public void keyPressed()
   else if(keyCode == 32)
   {
   spaceIsPressed = true;
-  }  
-  
+  }
+  else if(keyCode == 69 ) 
+  {
+  bulletList.add(new Bullet(bob)); 
+  } 
+  else if (keyCode==82)
+  {
+  gameOver=false;
+  }
 }
 public void keyReleased()
 {
@@ -210,7 +322,12 @@ public void keyReleased()
   else if(keyCode == 32)
   {
   spaceIsPressed = false; 
-  }  
+  } 
+  else if (keyCode==82)
+  {
+   rIsPressed = false;
+  }
+  
    
 } 
 class Star 
@@ -268,4 +385,38 @@ private int rotspeed;
     myPointDirection+=rotspeed;
   }
 }
+class Bullet extends Floater
+{
+  private int myAge;
+  public Bullet(SpaceShip bob)
+  {
+    myCenterX = bob.getX();
+    myCenterY = bob.getY();
+    myPointDirection = bob.getPointDirection();
+    double dRadians = myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionX();
+    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
+    myAge = 0;
+  }
+  public void setX(int x){myCenterX=x;}
+  public int getX(){return (int)myCenterX;}
+  public void setY(int y){myCenterY=y;}
+  public int getY(){return (int)myCenterY;}
+  public void setDirectionX(double x){myDirectionX=x;}    public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY=y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection=degrees;}
+  public double getPointDirection(){return myPointDirection;} 
+  
+  public int getAge(){
+    return myAge;
+  }
+  public void show()
+  {
+   fill(250,0,0);
+   ellipse((float)myCenterX,(float)myCenterY,5,5);
+   myAge++;
+
+  }
+} 
 
