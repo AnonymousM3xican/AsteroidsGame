@@ -182,7 +182,7 @@ class SpaceShip extends Floater
     yCorners[2] = 8-1;
     xCorners[3] = -2-1;
     yCorners[3] = 0-1;
-    myColor=color(250,0,0);
+    myColor=color(0,0,250);
     myCenterX = 250; 
     myCenterY = 250;   
     myDirectionX=0;
@@ -419,7 +419,8 @@ class Bullet extends Floater
   }
   public void show()
   {
-   fill(250,0,0);
+   fill(0,0,250);
+   stroke(0, 0, 250);
    ellipse((float)myCenterX,(float)myCenterY,5,5);
    myAge++;
 
