@@ -47,7 +47,9 @@ public void draw()
   bob.getX();
   bob.setY((int)(Math.random()*500)+1);
   bob.getY();
+  bob.setDirectionX(0);
   bob.getDirectionX();
+  bob.setDirectionY(0);
   bob.getDirectionY();
   bob.setPointDirection((int)(Math.random()*360)+1);
   bob.getPointDirection();
@@ -99,7 +101,9 @@ public void draw()
   bob.getX();
   bob.setY(250);
   bob.getY();
+  bob.setDirectionX(0);
   bob.getDirectionX();
+  bob.setDirectionY(0);
   bob.getDirectionY(); 
   bob.setPointDirection(50);
   bob.getPointDirection();
@@ -123,7 +127,9 @@ public void draw()
   bob.getX();
   bob.setY((int)(Math.random()*500)+1);
   bob.getY();
+  bob.setDirectionX(0);
   bob.getDirectionX();
+  bob.setDirectionY(0);
   bob.getDirectionY();
   bob.setPointDirection((int)(Math.random()*360)+1);
   bob.getPointDirection();
